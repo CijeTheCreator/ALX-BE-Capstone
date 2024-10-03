@@ -29,9 +29,7 @@ This API enables users to:
 
 - Register, log in, and manage their accounts.
 - Create, update, and delete products.
-- Submit reviews and ratings for products.
-- Create and manage wishlists.
-- Create and manage discounts on products.
+- Purchase products and manage stock.
 
 ---
 
@@ -222,6 +220,42 @@ Authorization: Token your_token
 
 - **URL**: `/api/products/{id}/`
 - **Method**: `DELETE`
+
+---
+
+#### Product Search
+
+- **URL**: `/api/products/search/`
+- **Method**: `GET`
+- **Query Parameters**:
+  - `name`: (optional) Partial name to search for products.
+  - `category`: (optional) Filter products by category.
+  - `price_min`: (optional) Minimum price for filtering.
+  - `price_max`: (optional) Maximum price for filtering.
+  - `page`: (optional) Page number for pagination (default is 1).
+  - `page_size`: (optional) Number of products per page (default is 10).
+- **Response**:
+  ```json
+  [
+    {
+      "id": 1,
+      "name": "Product 1",
+      "description": "A detailed description",
+      "price": 99.99,
+      "category": {
+        "name": "Electronics",
+        "description": "Category for electronic items"
+      },
+      "stock_quantity": 50,
+      "images": [
+        {
+          "image_url": "http://example.com/image1.jpg"
+        }
+      ],
+      "created_date": "2024-10-01"
+    }
+  ]
+  ```
 
 ---
 
