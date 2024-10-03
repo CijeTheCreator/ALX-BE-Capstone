@@ -4,6 +4,7 @@ from products.models import Product
 
 User = get_user_model()
 
+# Model representing a review
 class Review(models.Model):
     review_id = models.AutoField(primary_key=True)
     rating = models.IntegerField()

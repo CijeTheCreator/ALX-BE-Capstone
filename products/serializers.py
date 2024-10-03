@@ -1,17 +1,19 @@
 from rest_framework import serializers
 from .models import Product, Category, ProductImage
 
+# Serializer for the Category model, handling the creation and representation of categories
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['category_id', 'name', 'description']
 
+# Serializer for the ProductImage model, handling the creation and representation of images
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
         fields = ['image_id', 'image_url']
 
-
+# Serializer for the Product model, handling the creation and representation of products
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
     images = ProductImageSerializer(many=True)

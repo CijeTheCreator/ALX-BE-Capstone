@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from products.models import Product
 
+# Model representing a discount
 class Discount(models.Model):
     discount_id = models.AutoField(primary_key=True)
     percentage = models.DecimalField(max_digits=5, decimal_places=2)

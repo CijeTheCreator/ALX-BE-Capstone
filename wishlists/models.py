@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from products.models import Product
 
+# Model representing a wishlist
 class Wishlist(models.Model):
     wishlist_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
