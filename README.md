@@ -94,6 +94,7 @@ This API enables users to:
 
 This API uses token-based authentication. Users must authenticate via token to interact with most endpoints.
 You can authenticate by logging in or creating a new account
+
 ---
 
 ## Endpoints
@@ -115,12 +116,11 @@ You can authenticate by logging in or creating a new account
 - **Response**:
   ```json
   {
-    "token": "your_token",
+    "token": "your_token"
   }
   ```
 
 #### User Login
-
 
 - **URL**: `/api/accounts/login/`
 - **Method**: `POST`
@@ -135,9 +135,10 @@ You can authenticate by logging in or creating a new account
 - **Response**:
   ```json
   {
-    "token": "your_token",
+    "token": "your_token"
   }
   ```
+
 ---
 
 Include the token in the Authorization header for authenticated requests:
@@ -145,8 +146,8 @@ Include the token in the Authorization header for authenticated requests:
 ```bash
 Authorization: Token your_token
 ```
----
 
+---
 
 ### 2. **Products**
 
@@ -163,17 +164,17 @@ Authorization: Token your_token
       "description": "A detailed description",
       "price": 99.99,
       "category": {
-       "name": "Electronics",
-       "description": "Category for electronic items"
+        "name": "Electronics",
+        "description": "Category for electronic items"
       },
       "stock_quantity": 50,
       "images": [
-       {
-         "image_url": "http://example.com/image1.jpg"
-       },
-       {
-         "image_url": "http://example.com/image2.jpg"
-       }
+        {
+          "image_url": "http://example.com/image1.jpg"
+        },
+        {
+          "image_url": "http://example.com/image2.jpg"
+        }
       ],
       "created_date": "2024-10-01"
     }
@@ -188,23 +189,23 @@ Authorization: Token your_token
 - **Request Body**:
   ```json
   {
-      "name": "Product 1",
-      "description": "A detailed description",
-      "price": 99.99,
-      "category": {
-       "name": "Electronics",
-       "description": "Category for electronic items"
+    "name": "Product 1",
+    "description": "A detailed description",
+    "price": 99.99,
+    "category": {
+      "name": "Electronics",
+      "description": "Category for electronic items"
+    },
+    "stock_quantity": 50,
+    "images": [
+      {
+        "image_url": "http://example.com/image1.jpg"
       },
-      "stock_quantity": 50,
-      "images": [
-       {
-         "image_url": "http://example.com/image1.jpg"
-       },
-       {
-         "image_url": "http://example.com/image2.jpg"
-       }
-      ],
-    }
+      {
+        "image_url": "http://example.com/image2.jpg"
+      }
+    ]
+  }
   ```
 
 #### Retrieve a Product by ID
@@ -224,92 +225,54 @@ Authorization: Token your_token
 
 ---
 
-### 3. **Wishlists**
+### 3. **Purchases**
 
-#### List User's Wishlist
+#### Create a New Purchase
 
-- **URL**: `/api/wishlists/`
-- **Method**: `GET`
-
-#### Add a Product to Wishlist
-
-- **URL**: `/api/wishlists/`
+- **URL**: `/api/purchases/`
 - **Method**: `POST`
+- **Authentication Required**: Yes
 - **Request Body**:
+
   ```json
   {
-    "product_id": 1
+    "product": 1, // ID of the product to purchase
+    "quantity": 2 // Quantity of the product to purchase
   }
   ```
 
-#### Remove a Product from Wishlist
+- **Response** (Success - 201 Created):
 
-- **URL**: `/api/wishlists/{id}/`
-- **Method**: `DELETE`
-
----
-
-### 4. **Reviews**
-
-#### List All Reviews for a Product
-
-- **URL**: `/api/reviews/product/{product_id}/`
-- **Method**: `GET`
-
-#### Submit a Review
-
-- **URL**: `/api/reviews/`
-- **Method**: `POST`
-- **Request Body**:
   ```json
   {
-    "rating": 5,
-    "review_text": "Great product!",
-    "product_id": 1
+    "purchase_id": 1,
+    "user": 1,
+    "product": 1,
+    "quantity": 2,
+    "purchase_date": "2024-10-03T12:00:00Z"
   }
   ```
 
-#### Update a Review
+- **Response** (Error - 400 Bad Request: Insufficient Stock):
 
-- **URL**: `/api/reviews/{id}/`
-- **Method**: `PUT` or `PATCH`
-
-#### Delete a Review
-
-- **URL**: `/api/reviews/{id}/`
-- **Method**: `DELETE`
-
----
-
-### 5. **Discounts**
-
-#### List All Discounts
-
-- **URL**: `/api/discounts/`
-- **Method**: `GET`
-
-#### Create a New Discount
-
-- **URL**: `/api/discounts/`
-- **Method**: `POST`
-- **Request Body**:
   ```json
   {
-    "percentage": 10,
-    "start_date": "2024-10-01",
-    "end_date": "2024-10-31",
-    "product_id": 1
+    "non_field_errors": ["Insufficient stock available."]
   }
   ```
 
-#### Update a Discount
+- **Response** (Error - 401 Unauthorized):
 
-- **URL**: `/api/discounts/{id}/`
-- **Method**: `PUT` or `PATCH`
+  ```json
+  {
+    "detail": "Authentication credentials were not provided."
+  }
+  ```
 
-#### Delete a Discount
-
-- **URL**: `/api/discounts/{id}/`
-- **Method**: `DELETE`
-
----
+- **Response** (Error - 400 Bad Request: Validation Errors):
+  ```json
+  {
+    "product": ["This field is required."],
+    "quantity": ["This field is required."]
+  }
+  ```
