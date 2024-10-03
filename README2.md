@@ -29,7 +29,9 @@ This API enables users to:
 
 - Register, log in, and manage their accounts.
 - Create, update, and delete products.
-- Purchase products and manage stock.
+- Submit reviews and ratings for products.
+- Create and manage wishlists.
+- Create and manage discounts on products.
 
 ---
 
