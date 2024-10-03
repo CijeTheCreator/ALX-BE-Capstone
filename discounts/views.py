@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 class DiscountViewSet(viewsets.ModelViewSet):
     queryset = Discount.objects.all()
     serializer_class = DiscountSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         print("Hello World")

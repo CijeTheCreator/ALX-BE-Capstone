@@ -11,10 +11,28 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = ProductImage
         fields = ['image_id', 'image_url']
 
+
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
-    images = ProductImageSerializer(many=True, read_only=True)
+    images = ProductImageSerializer(many=True)
 
     class Meta:
         model = Product
         fields = ['product_id', 'name', 'description', 'price', 'category', 'stock_quantity', 'created_date', 'images']
+
+    def create(self, validated_data):
+        # Extract nested category and images data
+        category_data = validated_data.pop('category')
+        images_data = validated_data.pop('images', [])
+
+        # Create or get the category
+        category, created = Category.objects.get_or_create(**category_data)
+
+        # Create the product
+        product = Product.objects.create(category=category, **validated_data)
+
+        # Handle the images
+        for image_data in images_data:
+            ProductImage.objects.create(product=product, **image_data)
+
+        return product
