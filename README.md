@@ -93,31 +93,7 @@ This API enables users to:
 ## Authentication
 
 This API uses token-based authentication. Users must authenticate via token to interact with most endpoints.
-
-### Obtain Authentication Token
-
-- **URL**: `/api/auth/token/login/`
-- **Method**: `POST`
-- **Request Body**:
-  ```json
-  {
-    "username": "your_username",
-    "password": "your_password"
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "auth_token": "your_token"
-  }
-  ```
-
-Include the token in the Authorization header for authenticated requests:
-
-```bash
-Authorization: Token your_token
-```
-
+You can authenticate by logging in or creating a new account
 ---
 
 ## Endpoints
@@ -126,7 +102,7 @@ Authorization: Token your_token
 
 #### Register a New User
 
-- **URL**: `/api/auth/users/`
+- **URL**: `/api/accounts/login/`
 - **Method**: `POST`
 - **Request Body**:
   ```json
@@ -139,25 +115,38 @@ Authorization: Token your_token
 - **Response**:
   ```json
   {
-    "id": 1,
-    "username": "newuser",
-    "email": "newuser@example.com"
+    "token": "your_token",
   }
   ```
 
 #### User Login
 
-- **URL**: `/api/auth/token/login/`
+
+- **URL**: `/api/accounts/login/`
 - **Method**: `POST`
-- See [Authentication](#authentication) for request details.
-
-#### Get User Profile
-
-- **URL**: `/api/auth/users/me/`
-- **Method**: `GET`
-- **Authentication Required**: Yes
-
+- **Request Body**:
+  ```json
+  {
+    "username": "newuser",
+    "password": "newpassword",
+    "email": "newuser@example.com"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "token": "your_token",
+  }
+  ```
 ---
+
+Include the token in the Authorization header for authenticated requests:
+
+```bash
+Authorization: Token your_token
+```
+---
+
 
 ### 2. **Products**
 
@@ -173,9 +162,19 @@ Authorization: Token your_token
       "name": "Product 1",
       "description": "A detailed description",
       "price": 99.99,
-      "category": "Electronics",
+      "category": {
+       "name": "Electronics",
+       "description": "Category for electronic items"
+      },
       "stock_quantity": 50,
-      "image_url": "http://localhost:8000/media/images/product1.jpg",
+      "images": [
+       {
+         "image_url": "http://example.com/image1.jpg"
+       },
+       {
+         "image_url": "http://example.com/image2.jpg"
+       }
+      ],
       "created_date": "2024-10-01"
     }
   ]
@@ -189,13 +188,23 @@ Authorization: Token your_token
 - **Request Body**:
   ```json
   {
-    "name": "Product Name",
-    "description": "Product description",
-    "price": 59.99,
-    "category": "Category Name",
-    "stock_quantity": 100,
-    "image_url": "http://localhost:8000/media/images/product_image.jpg"
-  }
+      "name": "Product 1",
+      "description": "A detailed description",
+      "price": 99.99,
+      "category": {
+       "name": "Electronics",
+       "description": "Category for electronic items"
+      },
+      "stock_quantity": 50,
+      "images": [
+       {
+         "image_url": "http://example.com/image1.jpg"
+       },
+       {
+         "image_url": "http://example.com/image2.jpg"
+       }
+      ],
+    }
   ```
 
 #### Retrieve a Product by ID
