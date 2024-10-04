@@ -1,7 +1,7 @@
 
 # E-commerce API
 
-This API is built using Django and Django REST Framework to power an e-commerce platform. It provides core functionalities including user authentication, product management, reviews, wishlists, and discounts.
+This API is built using Django and Django REST Framework to power an e-commerce platform. It provides core functionalities including user authentication and product management.
 
 ## Table of Contents
 
