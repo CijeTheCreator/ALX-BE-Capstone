@@ -1,6 +1,3 @@
-Here's a detailed and well-documented README file for your Django E-commerce API, covering all the key components including user accounts, products, wishlists, reviews, and discounts. This README is designed to provide a comprehensive guide to understanding the API and how to interact with it.
-
----
 
 # E-commerce API
 
