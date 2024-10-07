@@ -55,8 +55,6 @@ class ProductSerializer(serializers.ModelSerializer):
         instance.stock_quantity = validated_data.get('stock_quantity', instance.stock_quantity)
         instance.save()
 
-        # Clear existing images and add new ones
-        instance.images.clear()  # Or delete and recreate images if necessary
         for image_data in images_data:
             ProductImage.objects.create(product=instance, **image_data)
 
