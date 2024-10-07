@@ -222,7 +222,7 @@ Authorization: Token your_token
 
 #### Product Search
 
-- **URL**: `/api/products/search/`
+- **URL**: `/api/products?search=value`
 - **Method**: `GET`
 - **Query Parameters**:
   - `name`: (optional) Partial name to search for products.
